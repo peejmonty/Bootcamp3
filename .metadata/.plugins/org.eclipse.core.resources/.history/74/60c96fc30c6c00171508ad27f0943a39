@@ -1,0 +1,156 @@
+/**Phillip Viens
+ * Lab1_ Two Dimensional Flexibility
+ * Purpose: To allow the user to create an array (given a column/row length)
+ * of random integers. The columns and rows are summed as well as the diagonal 
+ * integers. 
+ * 
+ */
+
+package viensp_lab1;
+
+import java.util.Scanner;
+import java.util.Random;
+
+public class TwoDimArray {
+	
+	/**
+	 * main method that contains a do/while loop that allows user
+	 * to create another array if desired.
+	 * @param args
+	 */
+
+	public static void main(String[] args) {
+		
+		Scanner kbd = new Scanner(System.in);
+		String input;
+		char repeat;
+		
+		welcome();
+		
+		do {
+			
+			int ColRowNum = ColumnsRows(kbd);
+			TwoDArray(ColRowNum);
+			System.out.println();
+			System.out.print("Repeat (y/n)? ");
+			input = kbd.nextLine();
+			repeat = input.charAt(0);
+		} while (repeat == 'y' || repeat == 'Y');
+		
+		goodbye();
+		
+		kbd.close();
+
+	}
+	
+	/** hello message method
+	 */
+	
+	public static void welcome() {
+		System.out.println();
+		System.out.println("This is the first lab for the new bootcamp.\n"
+				+ "You are going to tell me how many rows and columns you'd"
+				+ " like and we will create an array with the given size. \n"
+				+ "We will then print the array and total the columns, rows, "
+				+ "and the diagonals.");
+		
+	}
+	/** Goodbye message method
+	 * 
+	 */
+	
+	public static void goodbye() {
+		System.out.println();
+		System.out.println("Thanks for playing! Have a great Day!");
+		System.out.println();
+	}
+	
+	/**
+	 * method to allow user to input the number of columns and rows for array
+	 * @return number returns the variable given by the user for the number of 
+	 * Rows and columns
+	 *  */
+	
+	public static int ColumnsRows(Scanner kbd) {
+		
+		int INT_LO = 1;
+		int INT_HI = 10;
+		int number;
+		
+				System.out.println();
+		System.out.print("How many rows/cols (Something between 1 and 10)?  ");
+		number = kbd.nextInt();
+		kbd.nextLine();
+		System.out.println();
+		
+		while(!(INT_LO <= number && number <= INT_HI))
+		{		
+				System.out.println();
+				System.out.print("How many rows/cols "
+						+ "(Something between 1 and 10)?  ");
+				number = kbd.nextInt();
+				kbd.nextLine();
+				System.out.println();
+		}
+		
+		return number;
+
+	}
+	
+	/**
+	 * creates a 2D array and prints it with Sums for rows, columns, and diagonals.
+	 * @param ColRowNum which creates a MAX for number of rows and columns.
+	 */
+	
+	public static  void TwoDArray(int ColRowNum) {
+		
+		
+		final int MAX = ColRowNum;
+		
+		int[][] Array = new int [MAX][MAX];
+		int [] RowSums = new int [MAX];
+		int[] ColSums = new int [MAX];
+		int topToBottom = 0;
+		int bottomToTop = 0;
+		Random rand = new Random();
+		int range = 100;
+		int row;
+		int col;
+		
+		for (row = 0; row < ColRowNum; row++)
+		{
+			System.out.printf("   ");
+			for (col = 0; col < ColRowNum; col++)
+			{
+				Array[row][col] = rand.nextInt(range);
+				RowSums[row] += Array[row][col];
+				ColSums[col] += Array[row][col];
+				System.out.printf("%6s", Array[row][col]);
+				
+				if (col == row)
+				{
+					topToBottom += Array[row][col]; 
+				}
+				//else if (col == (ColRowNum-1) - row)
+				//{
+				//	bottomToTop += Array[row][col];
+				//}
+			}
+			
+			for (int i = MAX; i >= 0; i--)
+			{
+				bottomToTop += Array[row][i];
+			}
+			System.out.printf(" = %6s", RowSums[row]);
+			System.out.println();
+			
+		}
+		
+		System.out.print(bottomToTop);
+		for (row = 0; row < ColRowNum; row ++)
+		{
+			System.out.printf("%6s", ColSums[row]);
+		}
+		System.out.printf("   %6s", topToBottom);
+		}
+}
