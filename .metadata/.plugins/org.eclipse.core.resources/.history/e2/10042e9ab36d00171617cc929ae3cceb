@@ -1,0 +1,36 @@
+package viensp_lab3;
+
+import java.util.Scanner;
+
+public class Lab3
+{
+
+	public static void main(String[] args) {
+		
+		Scanner kbd = new Scanner(System.in);
+		
+		final int INT_LO = 50; 
+		final int INT_HI = 75; 
+		guessTarget(INT_LO, INT_HI);		
+	}
+	public static void guessTarget (int INT_LO, int INT_HI) {
+		int guess;
+		boolean results;
+		Scanner kbd = new Scanner(System.in);
+		GuessGame newInteger = new GuessGame(INT_LO, INT_HI);
+		
+		System.out.print("Guess a number between " 
+				+ INT_LO + " and " + INT_HI + ": ");
+		
+		guess = newInteger.guessTarget(kbd);
+		results = newInteger.Results(guess);
+		guessCounter++;
+		
+		while (results == false) {
+			guess = newInteger.guessTarget(kbd);
+			results = newInteger.Results(guess);
+		}
+		
+		
+	}
+}

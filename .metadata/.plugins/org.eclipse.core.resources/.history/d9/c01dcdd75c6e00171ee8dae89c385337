@@ -1,0 +1,15 @@
+package Rectangles;
+
+/**
+ * This program demonstrates the Rectangle class's
+ * setLength, setWidth, getLength, and getWidth methods.
+ * @author Phillip J Viens
+ */
+public class LengthWidthDemo {
+	public static void method(String[] args) {
+		//Create a Rectangle object.
+		Rectangle box = new Rectangle();
+		
+		//Call the object's setLength mehtod
+	}
+}

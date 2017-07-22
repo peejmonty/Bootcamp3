@@ -1,0 +1,4 @@
+commit_dialog_history_messages=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<messages>\r\n<message>Added formatting and functionality works. Need to add boolean</message>\r\n<message>created getNewInteger method&\#x0A;</message>\r\n<message>Created GuessGame and Lab3 classes</message>\r\n<message>Creaeted GuessGame and Lab3 classes</message>\r\n<message>changed class name</message>\r\n<message>added hello/goodbye methods. Added game method and comments</message>\r\n<message>Loaded die functioning and added comments</message>\r\n<message>made the loaded portion functional and added comments</message>\r\n<message>Dice Demo is formatted and working correctly need comments</message>\r\n<message>formatting is correct. Need to fix loaded die</message>\r\n</messages>
+eclipse.preferences.version=1
+resourcehistory_graph_split=500,500
+resourcehistory_rev_split=700,300

@@ -1,0 +1,37 @@
+package viensp_lab3;
+
+import java.util.Scanner;
+
+public class Lab3
+{
+
+	public static void main(String[] args) {
+		
+		Scanner kbd = new Scanner(System.in);
+		
+		final int INT_LO = 50; 
+		final int INT_HI = 75; 
+		guessTarget(INT_LO, INT_HI);		
+	}
+	
+	public static void guessTarget (int INT_LO, int INT_HI) {
+		int guess;
+		boolean results;
+		String stats;
+		
+		//boolean results;
+		GuessGame newInteger = new GuessGame(INT_LO, INT_HI);
+		Scanner kbd = new Scanner(System.in);
+		
+		do{
+			guess =  newInteger.guessTarget();
+			results = newInteger.Results(guess);
+			System.out.println(results + "adsfsadf");
+		} while( results == false);
+		
+		newInteger.displayStatistics();
+	}
+		
+		
+}
+

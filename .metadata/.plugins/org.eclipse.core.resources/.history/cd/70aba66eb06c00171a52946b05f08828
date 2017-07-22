@@ -1,0 +1,49 @@
+package viensp_lab2;
+/*
+* Phillip Viens
+* CPSC 5002, Seattle University
+* This is free and unencumbered software released into the public domain.
+*/
+public class DiceDemo {
+/** 
+* @author Phillip Viens
+*
+*/
+	public static void main(String[] args)
+	{
+		final int DIE1_SIDES = 6;    // Number of sides for die # 1
+		final int DIE2_SIDES = 12;   // Number of sides for die # 2
+		final int MAX_ROLLS = 10;     // Number of times to roll
+		int computerCount = 0;
+		int userCount = 0;
+		
+		// Create two instances of the Die class
+		LoadedDie die1 = new LoadedDie(DIE1_SIDES);
+		LoadedDie die2 = new LoadedDie(DIE2_SIDES);
+		
+		//Display the initial state of the dice.
+		System.out.println("This is a game of you versus the computer. "
+				+ "We will each have one die.\nWe roll our own die and the "
+				+ "higher number wins. We roll ten times \nand the one with "
+				+ "the higher number of wins is the grand wi"
+				+ "nner.");
+		
+		System.out.println("Initial value of the dice:");
+		System.out.println(die1.getValue() + " " + die2.getValue());
+		
+		//Roll the dice 10 times. 
+		System.out.println("Rolling the dice " + MAX_ROLLS + " times.");
+		
+		for (int i = 0; i < MAX_ROLLS; i++)
+		{
+			//Roll the dice.
+			System.out.println("Roll " + (i+1) + " of 10");
+			die1.roll();
+			System.out.println("I rolled a " + die1.getValue());
+			die2.roll();
+			
+			//Display the values of the dice.
+			System.out.println(die1.getValue() + " " + die2.getValue());
+		}
+	}
+}

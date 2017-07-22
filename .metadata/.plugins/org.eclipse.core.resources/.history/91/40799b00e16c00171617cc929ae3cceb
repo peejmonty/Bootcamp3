@@ -1,0 +1,83 @@
+package viensp_lab2;
+/*
+* Phillip Viens
+* CPSC 5002, Seattle University
+* This is free and unencumbered software released into the public domain.
+*/
+
+import java.util.Random;
+
+/**
+ * 
+ * @author Phillip J Viens
+ *
+ */
+public class LoadedDie {
+	private int loaded;   //Number of sides
+	private int moreTimes;
+	private int value;   //The die's value
+	private int tempValue;
+	/**
+	 * The constructor performs an initial roll of the die.
+	 * @param loadedNumber        which number should come up more often
+	 * @param moreTimesPerHundred how many times per 100 rolls to come up with 
+	 *                            the loaded number (instead of uniform random)
+	 */
+	
+	public LoadedDie(int loadedNumber, int moreTimesPerHundred)
+	{
+		loaded = loadedNumber;
+		moreTimes = moreTimesPerHundred;
+		roll();
+	}
+	
+	 /**
+	 * The roll method simulates the rolling of the die.
+	 * It will typically set this die's value to a random value
+	 * with uniform distribution between 1 and 6. Occasionally,
+	 * it will a priori return the favored value (with frequency
+	 * determined by the moreTimesPerHu
+	 * ndred argument that was passed
+	 * to the constructor).
+	 */
+	
+	public void roll()
+	{
+		//Create a Random object.
+		Random rand = new Random();
+		
+		
+		//Get a random value for the die.
+		tempValue = rand.nextInt(100) + 1;
+		
+		if (tempValue <= moreTimes)
+		{
+			value = moreTimes;
+		}
+		else
+		{
+			value = rand.nextInt(6);
+		}
+		
+	}
+	
+	/**
+	 * getSides method
+	 * @ return The number of sides for this die.
+	 */
+	
+	public int getSides()
+	{
+		return sides;
+	}
+	
+	/**
+	 * getValue method
+	 * @return The value of the die.
+	 */
+	
+	public int getValue()
+	{
+		return value;
+	}
+}

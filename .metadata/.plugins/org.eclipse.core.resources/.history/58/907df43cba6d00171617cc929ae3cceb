@@ -1,0 +1,95 @@
+package viensp_lab3;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class GuessGame {
+	private int target, guessTarget, guessCounter, 
+		rangeMinimum, rangeMaximum;
+	//private Scanner kbd = new Scanner(System.in);
+
+	public GuessGame (int INT_LO, int INT_HI) {
+		rangeMinimum = INT_LO;
+		rangeMaximum = INT_HI;
+		newTarget();
+		boolean results = Results(guessTarget);
+		displayStatistics(results);
+		Hint(target, guessTarget);
+		
+	}
+	
+	public int guessTarget() {
+		
+		Scanner kbd = new Scanner(System.in);
+		
+		guessTarget = kbd.nextInt();
+		
+		return guessTarget;
+	}
+	public void newTarget() {
+		
+		//Creates a random object
+		Random rand = new Random();	
+		target = rand.nextInt(rangeMaximum);
+	}
+	
+	public void displayStatistics(boolean results) {
+		guessCounter = 0;
+		if (results = true)
+		{
+			guessCounter++;
+			System.out.println();
+			System.out.println("You guessed " + guessCounter + " times.");
+		}
+		else
+		{
+			System.out.println();
+			guessCounter++;
+		}
+	}
+	public boolean Results(int guessTarget) {	
+		boolean flag;
+		if (guessTarget != target)
+		{
+			flag = false;
+		}
+		else 
+		{
+			flag = true;
+		}
+		return flag;
+	}
+	
+	public void getGuessTarget(int guess) {
+		guessTarget = guess;
+	}
+	public int setGuessTarget(int guessTarget) {
+		return guessTarget;
+	}
+	public void getRangeMinimum(int INT_LO) {
+		rangeMinimum = INT_LO;
+	}
+	public int setRangeMinimum(int rangeMinimum) {
+		return rangeMinimum;
+	}
+	public void getRangeMaximum(int INT_HI) {
+		rangeMaximum = INT_HI;
+	}
+	public int setRangeMaximum(int rangeMaximum) {
+		return rangeMaximum;
+	}
+	
+	private void Hint(int guessTarget, int target) {
+		
+		if (guessTarget < target)
+		{
+			System.out.println(guessTarget + " is too low.");
+			
+		}
+		else if (guessTarget > target)
+		{
+			System.out.println(guessTarget + " is too high.");
+		}
+		
+	}
+}

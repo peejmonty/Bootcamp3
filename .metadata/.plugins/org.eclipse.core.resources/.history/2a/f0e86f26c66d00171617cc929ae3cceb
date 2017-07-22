@@ -1,0 +1,46 @@
+package viensp_lab3;
+
+import java.util.Scanner;
+
+public class Lab3
+{
+
+	public static void main(String[] args) {
+		
+	
+
+		final int INT_LO = 50; 
+		final int INT_HI = 75; 
+		//guessTarget(INT_LO, INT_HI);	
+		
+	}
+	
+	public static void guessTarget (int INT_LO, int INT_HI) {
+		
+		String input;
+		char repeat;
+		Scanner kbd = new Scanner(System.in);
+		do{
+			int guess;			
+			boolean results;
+			GuessGame newInteger = new GuessGame(INT_LO, INT_HI);
+			do{
+				guess =  newInteger.guessTarget();
+				results = newInteger.Results(guess);
+			} while(results == false);
+			
+			newInteger.displayStatistics();
+			
+			System.out.println();
+			System.out.println("Play again? (y/n): ");
+			
+			input = kbd.nextLine();
+			repeat = input.charAt(0);
+			
+		} while (repeat == 'y' || repeat == 'Y');
+		
+	}
+		
+		
+}
+

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;CPSC5002/src/viensp_lab2/DiceDemo.java&apos; to &apos;DiceGame.java&apos;" description="Rename resource &apos;DiceDemo.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/viensp_lab2/DiceDemo.java" name="DiceGame.java" stamp="1500518007117" updateReferences="true"/>
+</session>
