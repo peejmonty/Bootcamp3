@@ -36,10 +36,10 @@ public class main {
 		System.out.println(treeS.contains("HellO"));
 		System.out.println("\nPre Order Traversal\n");
 		System.out.println(treeS.getPreOrderTraversal());
-		//System.out.println("\nIn Order Traversal\n");
-		//treeS.inOrder();
-		//System.out.println("\nPost order Traversal\n");
-		//treeS.postOrder();
+		System.out.println("\nIn Order Traversal\n");
+		System.out.println(treeS.getInOrderTraversal());
+		System.out.println("\nPost order Traversal\n");
+		System.out.println(treeS.getPostOrderTraversal());
 		
 	}
 	
