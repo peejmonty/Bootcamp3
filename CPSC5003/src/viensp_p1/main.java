@@ -61,7 +61,7 @@ public class main {
 		System.out.println("\n\nTree after inserting: ");
 		System.out.println("# Tree Height : " + tree.getTreeHeight( ));
 		System.out.println("# Elements : " + tree.size());
-		System.out.println("# Leaves : ");
+		System.out.println("# Leaves : " + tree.getLeafNodeCount());
 		System.out.println("\n\nTESTING TRAVERSALS\n");
 		System.out.println("\nPre-order traversal:");
 		System.out.println(tree.toString(tree.getPreOrderTraversal()));
@@ -70,6 +70,24 @@ public class main {
 		System.out.println("\nPost-order traversal");
 		System.out.println(tree.toString(tree.getPostOrderTraversal()));
 		System.out.println("\ntree is empty: "+tree.isEmpty());
+		System.out.println("\nTESTING CONTAINS\n");
+		System.out.println("should contain these..");
+		System.out.println("contains(20): " + tree.contains(20));
+		System.out.println("contains(40): " + tree.contains(40));
+		System.out.println("contains(10): " + tree.contains(10));
+		System.out.println("contains(70): " + tree.contains(70));
+		System.out.println("\nshould NOT contain these..");
+		System.out.println("contains(99): " + tree.contains(99));
+		System.out.println("contains(-2): " + tree.contains(-2));
+		System.out.println("contains(59): " + tree.contains(59));
+		System.out.println("contains(43): " + tree.contains(43));
+		System.out.println("\nTESTING getElementLevel\n");
+		System.out.println("getElementLevel(20): "+ tree.getElementLevel(20));
+		System.out.println("getElementLevel(40): "+ tree.getElementLevel(40));
+		System.out.println("getElementLevel(10): "+ tree.getElementLevel(10));
+		System.out.println("getElementLevel(70): "+ tree.getElementLevel(70));
+
+
 		
 	}
 	

@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @param <E>
  */
 public class BST<E extends Comparable<E>> {
+	int height = 0;
 	
 	public Node<E>root;
 	
@@ -246,14 +247,70 @@ public class BST<E extends Comparable<E>> {
 	public int getTreeHeight(Node<E> tree)
 	{
 		if(tree == null) 
-			return -1;
+			return 0;
 		else{
-			if (size(tree.left) > size(tree.right)) {
-				return getTreeHeight(tree.left);
+			int leftNode = getTreeHeight(tree.left);
+			int rightNode = getTreeHeight(tree.right);
+			
+			if (leftNode > rightNode) {
+				return leftNode + 1;
 			}
-			else
-				return getTreeHeight(tree.right);
+			else 
+				return rightNode + 1;
 		}
 			
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getLeafNodeCount() {
+		return(getLeafNodeCount(root));
+	}
+	
+	/**
+	 * 
+	 * @param tree
+	 * @return
+	 */
+	private int getLeafNodeCount(Node<E> tree) {
+		if (tree == null)
+			return 0;
+		if (tree.left == null && tree.right == null) 
+			return 1;
+		else
+			return getLeafNodeCount(tree.left) + getLeafNodeCount(tree.right);
+	}
+	
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public int getElementLevel(E val) {
+		return(getElementLevel(val, height, root));
+	}
+	
+	/**
+	 * 
+	 * @param value
+	 * @param tree
+	 * @return
+	 */
+	private int getElementLevel(E val, int level, Node<E> root) {
+		if(root == null)
+			return 0;
+		if(root.value == val)
+			return level + 1;
+		
+		int results = getElementLevel(val, level + 1, root.left);
+			if(results > 0) {
+				return results;
+			}
+		results = getElementLevel(val, level + 1, root.right);
+				return results;
+
+		
 	}
 }
