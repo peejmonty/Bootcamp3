@@ -1,11 +1,27 @@
+/*
+ * CPSC 5002, Seattle University
+ * This is free and unencumbered software released into the public domain
+ */
 package viensp_p1;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Phillip J Viens
+ *
+ * @param <E>
+ */
 public class BST<E extends Comparable<E>> {
 	
 	public Node<E>root;
 	
+	/**
+	 * 
+	 * @author Phillip J Viens
+	 *
+	 * @param <E>
+	 */
 	private static class Node<E> {
 		
 		private E value;
@@ -19,6 +35,12 @@ public class BST<E extends Comparable<E>> {
 		}
 	}
 	
+	/**
+	 * 
+	 * @author Phillip J Viens
+	 *
+	 * @param <E>
+	 */
 	private class RemovalResult<E> {
 		Node<E> node;
 		Node<E> tree;
@@ -29,10 +51,18 @@ public class BST<E extends Comparable<E>> {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isEmpty() {
 		return root == null;
 	}
 	
+	/**
+	 * 
+	 * @param insertValue
+	 */
 	public void insert(E insertValue) {
 		if(isEmpty())
 			root = new Node<E>(insertValue);
@@ -40,6 +70,12 @@ public class BST<E extends Comparable<E>> {
 			insert(root, insertValue);
 	}
 	
+	/**
+	 * 
+	 * @param root
+	 * @param insertValue
+	 * @return
+	 */
 	private Node<E> insert(Node<E> root, E insertValue) {
 		if (root == null) {
 			return new Node<E>(insertValue); 
@@ -52,10 +88,21 @@ public class BST<E extends Comparable<E>> {
 		return root;
 	}
 	
+	/**
+	 * 
+	 * @param searchValue
+	 * @return
+	 */
 	public boolean contains(E searchValue) {
 		return contains(searchValue, root);
 	}
 	
+	/**
+	 * 
+	 * @param searchValue
+	 * @param tree
+	 * @return
+	 */
 	private boolean contains(E searchValue, Node<E> tree) {
 		if (tree == null)
 			return false;
@@ -67,6 +114,10 @@ public class BST<E extends Comparable<E>> {
 			return true;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<E> getPreOrderTraversal()
 	{
 		ArrayList<E> preOrder = new ArrayList<E>();
@@ -77,6 +128,11 @@ public class BST<E extends Comparable<E>> {
 		return preOrder;
 	}
 	
+	/**
+	 * 
+	 * @param preOrder
+	 * @param tree
+	 */
 	private void preOrder(ArrayList<E>preOrder, Node<E> tree){
 		if (tree != null) {
 			preOrder.add(tree.value);
@@ -85,6 +141,10 @@ public class BST<E extends Comparable<E>> {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<E> getInOrderTraversal() {
 		ArrayList<E> inOrder = new ArrayList<E>();
 		if(root == null) {
@@ -94,6 +154,11 @@ public class BST<E extends Comparable<E>> {
 		return inOrder;
 	}
 	
+	/**
+	 * 
+	 * @param inOrder
+	 * @param tree
+	 */
 	private void inOrder(ArrayList<E>inOrder, Node<E> tree) {
 		if(tree != null) {
 			inOrder(inOrder, tree.left);
@@ -102,6 +167,10 @@ public class BST<E extends Comparable<E>> {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<E> getPostOrderTraversal() {
 		ArrayList<E> postOrder = new ArrayList<E>();
 		if(root == null) {
@@ -111,11 +180,80 @@ public class BST<E extends Comparable<E>> {
 		return postOrder;
 	}
 	
+	/**
+	 * 
+	 * @param postOrder
+	 * @param tree
+	 */
 	private void postOrder(ArrayList<E>postOrder, Node<E> tree) {
 		if(tree != null) {
 			postOrder(postOrder, tree.left);
 			postOrder(postOrder, tree.right);
 			postOrder.add(tree.value);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param results
+	 * @return
+	 */
+	public String toString(ArrayList <E> results) {
+		StringBuilder sb = new StringBuilder();
+		for (E s : results) {
+			sb.append(s);
+			sb.append(" ");
+		}
+ 		String resultsPrint;
+		resultsPrint = sb.toString();
+		return resultsPrint;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int size() {
+		return (size(root));
+	}
+	
+	/**
+	 * 
+	 * @param tree
+	 * @return
+	 */
+	private int size(Node<E> tree) {
+		
+		if (tree == null)
+			return 0;
+		else
+			return (size(tree.left) + 1 + size(tree.right));
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getTreeHeight() {
+		return getTreeHeight(root);
+	}
+	
+	/**
+	 * 
+	 * @param tree
+	 * @return
+	 */
+	public int getTreeHeight(Node<E> tree)
+	{
+		if(tree == null) 
+			return -1;
+		else{
+			if (size(tree.left) > size(tree.right)) {
+				return getTreeHeight(tree.left);
+			}
+			else
+				return getTreeHeight(tree.right);
+		}
+			
 	}
 }

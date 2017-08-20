@@ -1,8 +1,18 @@
+/*
+ * CPSC 5002, Seattle University
+ * This is free and unencumbered software released into the public domain
+ */
 package viensp_p1;
+
 
 import java.util.Scanner;
 import java.io.*;
 
+/**
+ * 
+ * @author Phillip J Viens
+ *
+ */
 public class main {
 
 	public static void main(String[] args) throws IOException{
@@ -15,38 +25,64 @@ public class main {
 		String fileName;
 		
 		hello();
-		getFile(kbd, treeS);
+		getFile(kbd, tree);
 		goodbye();
 
 	}
 	
-	public static void getFile(Scanner kbd, BST<String> treeS) throws IOException {
+	/**
+	 * 
+	 * @param kbd
+	 * @param tree
+	 * @throws IOException
+	 */
+	public static void getFile(Scanner kbd, BST<Integer> tree) throws IOException {
+		String tempName;
 		String fileName;
-		System.out.println("Enter a file name");
-		fileName = kbd.nextLine();
-		
+		System.out.println("Creating a tree");
+		System.out.println("tree is empty: "+tree.isEmpty());
+		System.out.println("Load file (Enter blank to use predefined nums): ");
+		tempName = kbd.nextLine();
+		if (tempName.length() == 0)
+			fileName = "simple.txt";
+		else
+			fileName = tempName;
+			
 		File file = new File(fileName);
 		Scanner inputFile = new Scanner(file);
 		
+		System.out.println("TESTING INSERT: inserting elements in this order");
+		
 		while (inputFile.hasNext()) {
-			String data = inputFile.nextLine();
-		treeS.insert(data);
+			int data = inputFile.nextInt();
+			System.out.print(data + " ");
+			tree.insert(data);
 		}
-		inputFile.close();
-		System.out.println(treeS.contains("HellO"));
-		System.out.println("\nPre Order Traversal\n");
-		System.out.println(treeS.getPreOrderTraversal());
-		System.out.println("\nIn Order Traversal\n");
-		System.out.println(treeS.getInOrderTraversal());
-		System.out.println("\nPost order Traversal\n");
-		System.out.println(treeS.getPostOrderTraversal());
+		System.out.println("\n\nTree after inserting: ");
+		System.out.println("# Tree Height : " + tree.getTreeHeight( ));
+		System.out.println("# Elements : " + tree.size());
+		System.out.println("# Leaves : ");
+		System.out.println("\n\nTESTING TRAVERSALS\n");
+		System.out.println("\nPre-order traversal:");
+		System.out.println(tree.toString(tree.getPreOrderTraversal()));
+		System.out.println("\nIn-order traversal:");
+		System.out.println(tree.toString(tree.getInOrderTraversal()));
+		System.out.println("\nPost-order traversal");
+		System.out.println(tree.toString(tree.getPostOrderTraversal()));
+		System.out.println("\ntree is empty: "+tree.isEmpty());
 		
 	}
 	
+	/**
+	 * 
+	 */
 	public static void hello() {
-		System.out.println("Hello this is a hello message.");
+		System.out.println("Welcome to the BST test program.\n");
 	}
 	
+	/**
+	 * 
+	 */
 	public static void goodbye() {
 		System.out.println("\nThanks for playing, goodbye!\n ");
 	}
