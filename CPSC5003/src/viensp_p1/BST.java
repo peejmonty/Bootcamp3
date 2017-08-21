@@ -36,6 +36,47 @@ public class BST<E extends Comparable<E>> {
 		}
 	}
 	
+	BST() {
+		root = null;
+	}
+	
+	public void remove(E value) {
+		root = remove(root, value);
+	}
+	
+	private Node<E> remove(Node<E> root, E value) {
+		if (root == null) {
+			return root;
+		}
+		if(value.compareTo(root.value) < 0) {
+			root.left = remove(root.left, value);
+		}
+		else if(value.compareTo(root.value) > 0)
+			root.right = remove(root.right, value);
+		else {
+			if(root.left == null)
+				return root.right;
+			else if (root.right == null)
+				return root.left;
+		
+		root.value = minValue(root.right);
+		
+		root.right = remove(root.right, root.value);
+		}
+	
+		return root;
+	}
+	
+	private E minValue(Node<E> root) {
+		
+		E minV = root.value;
+		while(root.left != null) {
+			minV = root.left.value;
+			root = root.left;
+		}
+		return minV;
+	}
+	
 	/**
 	 * 
 	 * @author Phillip J Viens
@@ -180,7 +221,7 @@ public class BST<E extends Comparable<E>> {
 		postOrder(postOrder, root);
 		return postOrder;
 	}
-	
+
 	/**
 	 * 
 	 * @param postOrder
@@ -192,6 +233,30 @@ public class BST<E extends Comparable<E>> {
 			postOrder(postOrder, tree.right);
 			postOrder.add(tree.value);
 		}
+	}
+	
+	public ArrayList<E> getAncestorsOf(E value) {
+		ArrayList<E> ancestorsOf = new ArrayList<E>();
+		getAncestorsOf(ancestorsOf, root, value);
+		return ancestorsOf;
+	}
+	
+	private boolean getAncestorsOf(ArrayList<E> ancestorsOf, Node<E> root, E value) {
+		if (root == null) {
+			return false;
+		}
+		if(root.value == value) {
+			return true;
+		}
+		if(getAncestorsOf(ancestorsOf, root.left, value)) {
+			ancestorsOf.add(root.value);
+			return true;
+		}
+		if(getAncestorsOf(ancestorsOf, root.right, value)) {
+			ancestorsOf.add(root.value);
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -302,7 +367,7 @@ public class BST<E extends Comparable<E>> {
 		if(root == null)
 			return 0;
 		if(root.value == val)
-			return level + 1;
+			return level +  1;
 		
 		int results = getElementLevel(val, level + 1, root.left);
 			if(results > 0) {
@@ -310,7 +375,6 @@ public class BST<E extends Comparable<E>> {
 			}
 		results = getElementLevel(val, level + 1, root.right);
 				return results;
-
-		
 	}
+	
 }
