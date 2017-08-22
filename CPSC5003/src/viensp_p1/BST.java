@@ -5,6 +5,7 @@
 package viensp_p1;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * 
@@ -13,8 +14,16 @@ import java.util.ArrayList;
  * @param <E>
  */
 public class BST<E extends Comparable<E>> {
-	int height = 0;
+	private int height = 0;
+	public int elementsLevel;
+	private ArrayList<E> preOrder;
+	private ArrayList<E> inOrder;
+	private ArrayList<E> postOrder;
+	private ArrayList<E> ancestorsOf;
 	
+	/**
+	 * 
+	 */
 	public Node<E>root;
 	
 	/**
@@ -36,61 +45,61 @@ public class BST<E extends Comparable<E>> {
 		}
 	}
 	
-	BST() {
+	public BST() {
 		root = null;
-	}
-	
-	public void remove(E value) {
-		root = remove(root, value);
-	}
-	
-	private Node<E> remove(Node<E> root, E value) {
-		if (root == null) {
-			return root;
-		}
-		if(value.compareTo(root.value) < 0) {
-			root.left = remove(root.left, value);
-		}
-		else if(value.compareTo(root.value) > 0)
-			root.right = remove(root.right, value);
-		else {
-			if(root.left == null)
-				return root.right;
-			else if (root.right == null)
-				return root.left;
 		
-		root.value = minValue(root.right);
-		
-		root.right = remove(root.right, root.value);
-		}
-	
-		return root;
-	}
-	
-	private E minValue(Node<E> root) {
-		
-		E minV = root.value;
-		while(root.left != null) {
-			minV = root.left.value;
-			root = root.left;
-		}
-		return minV;
 	}
 	
 	/**
 	 * 
-	 * @author Phillip J Viens
-	 *
-	 * @param <E>
+	 * @param value
 	 */
-	private class RemovalResult<E> {
-		Node<E> node;
-		Node<E> tree;
-
-		RemovalResult(Node node, Node tree) {
-			this.node = node;
-			this.tree = tree;
+	public void remove(E value) {
+		root = remove(root, value);
+	}
+	
+	/**
+	 * 
+	 * @param root
+	 * @param value
+	 * @return
+	 */
+	private Node<E> remove(Node<E> tree, E value) {
+		if (tree == null) {
+			return tree;
 		}
+		if(value.compareTo(tree.value) < 0) {
+			tree.left = remove(tree.left, value);
+		}
+		else if(value.compareTo(tree.value) > 0)
+			tree.right = remove(tree.right, value);
+		else {
+			if(tree.left == null)
+				return tree.right;
+			else if (tree.right == null)
+				return tree.left;
+		
+		tree.value = minValue(tree.right);
+		
+		tree.right = remove(tree.right, tree.value);
+		}
+	
+		return tree;
+	}
+	
+	/**
+	 * 
+	 * @param root
+	 * @return
+	 */
+	private E minValue(Node<E> tree) {
+		
+		E minV = tree.value;
+		while(tree.left != null) {
+			minV = tree.left.value;
+			tree = tree.left;
+		}
+		return minV;
 	}
 	
 	/**
@@ -126,7 +135,8 @@ public class BST<E extends Comparable<E>> {
 			root.left = insert(root.left, insertValue);
 		}
 		else if (insertValue.compareTo(root.value) > 0)
-			root.right = insert(root.right, insertValue);
+			root.right = insert(root 
+					.right, insertValue);
 		return root;
 	}
 	
@@ -162,11 +172,11 @@ public class BST<E extends Comparable<E>> {
 	 */
 	public ArrayList<E> getPreOrderTraversal()
 	{
-		ArrayList<E> preOrder = new ArrayList<E>();
+		preOrder = new ArrayList<E>();
 		if (root == null) {
 			return preOrder;
 		}
-		preOrder(preOrder, root);
+		preOrder(root);
 		return preOrder;
 	}
 	
@@ -175,11 +185,11 @@ public class BST<E extends Comparable<E>> {
 	 * @param preOrder
 	 * @param tree
 	 */
-	private void preOrder(ArrayList<E>preOrder, Node<E> tree){
+	private void preOrder(Node<E> tree){
 		if (tree != null) {
 			preOrder.add(tree.value);
-			preOrder(preOrder, tree.left);
-			preOrder(preOrder, tree.right);
+			preOrder(tree.left);
+			preOrder(tree.right);
 		}
 	}
 	
@@ -188,11 +198,11 @@ public class BST<E extends Comparable<E>> {
 	 * @return
 	 */
 	public ArrayList<E> getInOrderTraversal() {
-		ArrayList<E> inOrder = new ArrayList<E>();
+		inOrder = new ArrayList<E>();
 		if(root == null) {
 			return inOrder;
 		}
-		inOrder(inOrder, root);
+		inOrder(root);
 		return inOrder;
 	}
 	
@@ -201,11 +211,11 @@ public class BST<E extends Comparable<E>> {
 	 * @param inOrder
 	 * @param tree
 	 */
-	private void inOrder(ArrayList<E>inOrder, Node<E> tree) {
+	private void inOrder(Node<E> tree) {
 		if(tree != null) {
-			inOrder(inOrder, tree.left);
+			inOrder(tree.left);
 			inOrder.add(tree.value);
-			inOrder(inOrder, tree.right);
+			inOrder(tree.right);
 		}
 	}
 	
@@ -214,11 +224,11 @@ public class BST<E extends Comparable<E>> {
 	 * @return
 	 */
 	public ArrayList<E> getPostOrderTraversal() {
-		ArrayList<E> postOrder = new ArrayList<E>();
+		postOrder = new ArrayList<E>();
 		if(root == null) {
 			return postOrder;
 		}
-		postOrder(postOrder, root);
+		postOrder(root);
 		return postOrder;
 	}
 
@@ -227,32 +237,44 @@ public class BST<E extends Comparable<E>> {
 	 * @param postOrder
 	 * @param tree
 	 */
-	private void postOrder(ArrayList<E>postOrder, Node<E> tree) {
+	private void postOrder(Node<E> tree) {
 		if(tree != null) {
-			postOrder(postOrder, tree.left);
-			postOrder(postOrder, tree.right);
+			postOrder(tree.left);
+			postOrder(tree.right);
 			postOrder.add(tree.value);
 		}
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public ArrayList<E> getAncestorsOf(E value) {
-		ArrayList<E> ancestorsOf = new ArrayList<E>();
-		getAncestorsOf(ancestorsOf, root, value);
+		ancestorsOf = new ArrayList<E>();
+		getAncestorsOf(root, value);
 		return ancestorsOf;
 	}
 	
-	private boolean getAncestorsOf(ArrayList<E> ancestorsOf, Node<E> root, E value) {
+	/**
+	 * 
+	 * @param ancestorsOf
+	 * @param root
+	 * @param value
+	 * @return
+	 */
+	private boolean getAncestorsOf(Node<E> root, E value) {
 		if (root == null) {
 			return false;
 		}
 		if(root.value == value) {
 			return true;
 		}
-		if(getAncestorsOf(ancestorsOf, root.left, value)) {
+		if(getAncestorsOf(root.left, value)) {
 			ancestorsOf.add(root.value);
 			return true;
 		}
-		if(getAncestorsOf(ancestorsOf, root.right, value)) {
+		if(getAncestorsOf(root.right, value)) {
 			ancestorsOf.add(root.value);
 			return true;
 		}
@@ -265,14 +287,28 @@ public class BST<E extends Comparable<E>> {
 	 * @return
 	 */
 	public String toString(ArrayList <E> results) {
+	
 		StringBuilder sb = new StringBuilder();
-		for (E s : results) {
-			sb.append(s);
-			sb.append(" ");
+		String resultsPrint;
+		
+		if(results.isEmpty())
+			return "(empty)";
+		else {
+			for (E s : results) {
+				sb.append(s);
+				sb.append(" ");
+			}
+			resultsPrint = sb.toString();
+			return resultsPrint;
 		}
- 		String resultsPrint;
-		resultsPrint = sb.toString();
-		return resultsPrint;
+	}
+	
+	/**
+	 * 
+	 */
+	public String toString() {
+        return new TreePrinter().getStringReprOf(this.root);
+
 	}
 	
 	/**
@@ -377,4 +413,175 @@ public class BST<E extends Comparable<E>> {
 				return results;
 	}
 	
+	 private class TreePrinter {
+
+	        /**
+	         * Generates the string representation of the given tree rooted at the
+	         * node
+	         * @param node tree to represent
+	         * @return String representation of the given tree rooted at the node
+	         */
+	        private String getStringReprOf(Node<E> node) {
+	            if (node == null) {
+	                return "(empty)";
+	            }
+
+	            Block blk = getBlock(node);
+	            StringBuilder sb = new StringBuilder();
+	            for (StringBuilder line : blk.lines) {
+	                sb.append(line).append('\n');
+	            }
+	            return sb.toString();
+	        }
+
+	        private Block getBlock(Node<E> node) {
+	            // min spacing between left and right blocks
+	            final int SP = 2;
+
+	            // base case
+	            if (node == null) {
+	                return null;
+	            }
+
+	            Block lft = getBlock(node.left);
+	            Block rgt = getBlock(node.right);
+	            boolean hasLft = lft != null;
+	            boolean hasRgt = rgt != null;
+
+	            // root value and root length
+	            String val = node.value.toString();
+	            int len = node.value.toString().length();
+
+	            // how much the right block needs to be shifted and the width of all
+	            int rgtShift = hasLft ? (lft.width + SP) : 0;
+	            int width = rgtShift + (hasRgt ? rgt.width : 0);
+
+	            // where should the root attach if there is left blk?
+	            int rootIdx = hasLft ? lft.toIdx + 1 : 0;
+
+	            // where should the root be positioned if also have right blk?
+	            if (hasRgt) {
+	                int rgtRootAttachIdx = rgt.fmIdx + rgtShift - 1 - len;
+	                if (rgtRootAttachIdx < rootIdx) {
+	                    // the right block needs to move right more
+	                    int moreShift = rootIdx - rgtRootAttachIdx;
+	                    rgtShift += moreShift;
+	                    width += moreShift;
+	                } else {
+	                    // the root needs to be positioned in-between
+	                    rootIdx = rootIdx + (rgtRootAttachIdx - rootIdx) / 2;
+	                }
+	            } else {
+	                width = Math.max(width, rootIdx + len);
+	            }
+
+	            // build the line with the root
+	            StringBuilder line = new StringBuilder();
+	            padUntil(line, ' ', rootIdx);
+	            line.append(val);
+	            padUntil(line, ' ', width);
+
+	            // start building a new block
+	            Block result = new Block();
+	            result.lines.add(line);
+
+	            // build the line with the leads if have children
+	            if (hasLft || hasRgt) {
+	                line = new StringBuilder();
+	                if (hasLft) {
+	                    padUntil(line, ' ', lft.toIdx);
+	                    padUntil(line, '_', rootIdx - 1);
+	                    line.append('/');
+	                }
+	                if (hasRgt) {
+	                    padUntil(line, ' ', rootIdx + len);
+	                    line.append('\\');
+	                    padUntil(line, '_', rgt.fmIdx + rgtShift);
+	                }
+	                padUntil(line, ' ', width);
+	                result.lines.add(line);
+	            }
+
+	            // add combined children lines
+	            result.lines.addAll(combinedLines(lft, rgt, rgtShift));
+	            result.width = width;
+	            result.fmIdx = rootIdx;
+	            result.toIdx = rootIdx + len;
+	            return result;
+	        }
+
+	        /**
+	         * Combines the children blocks with the given shift
+	         * @param lft Left Block to combine
+	         * @param rgt Right Block to combine
+	         * @param shift amount to shift the right block
+	         * @return combined lines
+	         */
+	        private ArrayList<StringBuilder> combinedLines(Block lft, Block rgt,
+	                                                       int shift) {
+	            ArrayList<StringBuilder> lines = new ArrayList<StringBuilder>();
+	            if (lft == null) {
+	                if (rgt != null) {
+	                    for (StringBuilder sb : rgt.lines) {
+	                        StringBuilder line = new StringBuilder();
+	                        padSpUntil(line, shift);
+	                        line.append(sb);
+	                        lines.add(line);
+	                    }
+	                }
+	                return lines;
+	            } else if (rgt == null) {
+	                return lft.lines;
+	            }
+
+	            final Iterator<StringBuilder> lftIt = lft.lines.iterator();
+	            final Iterator<StringBuilder> rgtIt = rgt.lines.iterator();
+
+	            while (lftIt.hasNext() || rgtIt.hasNext()) {
+	                StringBuilder sb =
+	                    lftIt.hasNext() ? lftIt.next() : new StringBuilder();
+	                padSpUntil(sb, shift);
+	                if (rgtIt.hasNext()) {
+	                    sb.append(rgtIt.next());
+	                }
+	                lines.add(sb);
+	            }
+	            return lines;
+	        }
+
+	        /**
+	         * Helper to add multiple characters to the StringBuilder
+	         * @param sb  StringBuilder to append to
+	         * @param c   character to add
+	         * @param len add until sb is this length
+	         */
+	        private void padUntil(StringBuilder sb, char c, int len) {
+	            while (sb.length() < len) {
+	                sb.append(c);
+	            }
+	        }
+
+	        /**
+	         * Helper to add multiple characters to the StringBuilder
+	         * @param sb  StringBuilder to pad
+	         * @param len add until sb is this length
+	         */
+	        private void padSpUntil(StringBuilder sb, int len) {
+	            while (sb.length() < len) {
+	                sb.append(' ');
+	            }
+	        }
+
+	        /**
+	         * Print Block
+	         */
+	        private class Block {
+	            // String lines
+	            ArrayList<StringBuilder> lines = new ArrayList<StringBuilder>();
+	            int fmIdx = 0;  // index of the root value start on 1st line
+	            int toIdx = 0;  // index of the root value end on 1st line
+	            int width = 0;  // how wide the lines are
+	        }
+	        
+	    }
 }

@@ -62,6 +62,8 @@ public class main {
 		System.out.println("# Tree Height : " + tree.getTreeHeight( ));
 		System.out.println("# Elements : " + tree.size());
 		System.out.println("# Leaves : " + tree.getLeafNodeCount());
+		System.out.println(tree.toString());
+		System.out.println(tree.toString());
 		System.out.println("\n\nTESTING TRAVERSALS\n");
 		System.out.println("\nPre-order traversal:");
 		System.out.println(tree.toString(tree.getPreOrderTraversal()));
@@ -81,28 +83,23 @@ public class main {
 		System.out.println("contains(-2): " + tree.contains(-2));
 		System.out.println("contains(59): " + tree.contains(59));
 		System.out.println("contains(43): " + tree.contains(43));
-		System.out.println("TESTING REMOVE: removing some values: 20 40 10 70 99 -2 59 43");
+		System.out.println("\nTESTING REMOVE: removing some values: 20 40 10");
 		tree.remove(20);
 		tree.remove(40);
-		tree.remove(10);
-		tree.remove(70);
-		tree.remove(99);
-		tree.remove(-2);
-		tree.remove(59);
-		tree.remove(43);
+		tree.remove(30);
+		tree.remove(60);
+		System.out.println(tree.toString());
 		System.out.println("\nTESTING getElementLevel\n");
-		System.out.println("getElementLevel(20): "+ tree.getElementLevel(20));
-		System.out.println("getElementLevel(40): "+ tree.getElementLevel(40));
+		//System.out.println("getElementLevel(20): "+ tree.getElementLevel(20));
+		//System.out.println("getElementLevel(40): "+ tree.getElementLevel(40));
+		System.out.println("getElementLevel(50): "+ tree.getElementLevel(50));
 		System.out.println("getElementLevel(10): "+ tree.getElementLevel(10));
 		System.out.println("getElementLevel(70): "+ tree.getElementLevel(70));
 		System.out.println("\nTESTING getAncestorsOf\n");
-		System.out.println ("getAncestorOf(40): " + tree.getAncestorsOf(40));
+		System.out.println ("getAncestorOf(40): " + tree.toString(tree.getAncestorsOf(40)));
 		System.out.println ("getAncestorOf(20): " + tree.getAncestorsOf(20));
 		System.out.println ("getAncestorOf(10): " + tree.getAncestorsOf(10));
-		System.out.println ("getAncestorOf(70): " + tree.getAncestorsOf(70));
-
-
-		
+		System.out.println ("getAncestorOf(70): " + tree.getAncestorsOf(70));		
 	}
 	
 	/**
