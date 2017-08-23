@@ -9,9 +9,8 @@ import java.util.Scanner;
 import java.io.*;
 
 /**
- * 
+ * P1 is the driver file that tests all of the methods in the BST class
  * @author Phillip J Viens
- *
  */
 public class P1 {
 	
@@ -27,17 +26,20 @@ public class P1 {
 		BST <Integer>tree = new BST<Integer>();		
 		hello();
 		getFile(kbd, tree);
-		
 		System.out.println("\n\nTree after inserting: ");
 		printTree(tree);
 		System.out.println("\n\nTESTING TRAVERSALS\n");
 		System.out.println("\nPre-order traversal:");
-		System.out.println(tree.toString(tree.getPreOrderTraversal()));
+		System.out.println(tree.combineToString(
+				tree.getPreOrderTraversal()));
 		System.out.println("\nIn-order traversal:");
-		System.out.println(tree.toString(tree.getInOrderTraversal()));
+		System.out.println(tree.combineToString(
+				tree.getInOrderTraversal()));
 		System.out.println("\nPost-order traversal");
-		System.out.println(tree.toString(tree.getPostOrderTraversal()));
+		System.out.println(tree.combineToString(
+				tree.getPostOrderTraversal()));
 		System.out.println("\ntree is empty: "+tree.isEmpty());
+		
 		System.out.println("\nTESTING CONTAINS\n");
 		System.out.println("should contain these..");
 		System.out.println("contains(20): " + tree.contains(20));
@@ -49,7 +51,9 @@ public class P1 {
 		System.out.println("contains(-2): " + tree.contains(-2));
 		System.out.println("contains(59): " + tree.contains(59));
 		System.out.println("contains(43): " + tree.contains(43));
-		System.out.println("\nTESTING REMOVE: removing some values: 20 40 10 70 99 -2 59 43");
+		
+		System.out.println("\nTESTING REMOVE: removing some values: "
+				+ "20 40 10 70 99 -2 59 43");
 		tree.remove(20);
 		tree.remove(40);
 		tree.remove(10);
@@ -61,7 +65,8 @@ public class P1 {
 		tree.remove(43);
 		System.out.println("\nTree after removals:");
 		printTree(tree);
-		System.out.println("\nAdding back some values: 99 20 -2 40 10 70 59 43");
+		System.out.println("\nAdding back some values: "
+				+ "99 20 -2 40 10 70 59 43");
 		tree.insert(99);
 		tree.insert(20);
 		tree.insert(-2);
@@ -85,15 +90,16 @@ public class P1 {
 		
 		System.out.println("\nTESTING getAncestorsOf:");
 		System.out.println ("getAncestorOf(0): " 
-				+ tree.toString(tree.getAncestorsOf(0)));
+				+ tree.combineToString(tree.getAncestorsOf(0)));
 		System.out.println ("getAncestorOf(-2): " 
-				+ tree.toString(tree.getAncestorsOf(-2)));
+				+ tree.combineToString(tree.getAncestorsOf(-2)));
 		System.out.println ("getAncestorOf(43): " 
-				+ tree.toString(tree.getAncestorsOf(43)));
+				+ tree.combineToString(tree.getAncestorsOf(43)));
 		System.out.println ("getAncestorOf(99): " 
-				+ tree.toString(tree.getAncestorsOf(99)));	
-		
+				+ tree.combineToString
+				(tree.getAncestorsOf(99)));
 		goodbye();
+		
 
 	}
 	
@@ -105,22 +111,25 @@ public class P1 {
 	 * @param tree BST tree object
 	 * @throws IOException
 	 */
-	public static void getFile(Scanner kbd, BST<Integer> tree) throws IOException {
+	public static void getFile(Scanner kbd, BST<Integer> tree) 
+			throws IOException {
 		String tempName;
 		String fileName;
 		System.out.println("Creating a tree");
 		System.out.println("tree is empty: "+tree.isEmpty());
-		System.out.println("Load file (Enter blank to use predefined nums): ");
+		System.out.println("Load file (Enter blank to use "
+				+ "predefined nums): ");
 		tempName = kbd.nextLine();
 		if (tempName.length() == 0)
-			fileName = "simple.txt";
+			fileName = "src/viensp_p1/simple.txt";
 		else
 			fileName = tempName;
 			
 		File file = new File(fileName);
 		Scanner inputFile = new Scanner(file);
 		
-		System.out.println("TESTING INSERT: inserting elements in this order");
+		System.out.println("TESTING INSERT: inserting "
+				+ "elements in this order");
 		
 		while (inputFile.hasNext()) {
 			int data = inputFile.nextInt();
@@ -136,7 +145,8 @@ public class P1 {
 	 * @param tree takes in the BST object.
 	 */
 	public static <E> void printTree(BST<Integer> tree) {
-		System.out.println("# Tree Height : " + tree.getTreeHeight( ));
+		System.out.println("# Tree Height : "
+				+ tree.getTreeHeight( ));
 		System.out.println("# Elements : " + tree.size());
 		System.out.println("# Leaves : " + tree.getLeafNodeCount());
 		System.out.println(tree.toString());

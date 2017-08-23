@@ -8,29 +8,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * 
+ * BST class creates a generic binary search tree.
  * @author Phillip J Viens
- *
  * @param <E>
  */
 public class BST<E extends Comparable<E>> {
-	private int height = 0;
-	public int elementsLevel;
-	private ArrayList<E> preOrder;
-	private ArrayList<E> inOrder;
-	private ArrayList<E> postOrder;
-	private ArrayList<E> ancestorsOf;
+	private Node<E> root;				//base of the BST
 
 	/**
-	 * 
-	 */
-	public Node<E> root;
-
-	/**
-	 * 
+	 * class that creates the nodes.
 	 * @author Phillip J Viens
-	 *
-	 * @param <E>
+	 * @param <E> generic parameter
 	 */
 	private static class Node<E> {
 
@@ -38,6 +26,10 @@ public class BST<E extends Comparable<E>> {
 		private Node<E> left;
 		private Node<E> right;
 
+		/**
+		 * Node constructor
+		 * @param value value of the Node
+		 */
 		private Node(E value) {
 			this.value = value;
 			this.left = null;
@@ -46,43 +38,54 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * No argument constructor.
+	 * No argument constructor for the BST.
 	 */
 	public BST() {
 		root = null;
-
 	}
 
 	/**
-	 * 
-	 * @param value
+	 * The public remove method removes a value from the BST.
+	 * @param The value that is being removed
 	 */
 	public void remove(E value) {
 		root = remove(root, value);
 	}
 
 	/**
-	 * 
-	 * @param root
-	 * @param value
-	 * @return
+	 * This remove method removes a value from the BST.
+	 * and returns the removed node and the returns the new
+	 * position of the node it's replaced with.
+	 * @param tree The binary search Tree.
+	 * @param value the value to be removed.
+	 * @return the updated BST.
 	 */
 	private Node<E> remove(Node<E> tree, E value) {
+		
+		//Base case: empty
 		if (tree == null) {
 			return tree;
 		}
+		
+		//recurs through the tree.
 		if (value.compareTo(tree.value) < 0) {
 			tree.left = remove(tree.left, value);
 		} else if (value.compareTo(tree.value) > 0)
 			tree.right = remove(tree.right, value);
+		
+		//If key is found this is node to be deleted.
 		else {
+			
+			//Nodes with only one child.
 			if (tree.left == null)
 				return tree.right;
 			else if (tree.right == null)
 				return tree.left;
 
+			//Node with two children 
 			tree.value = minValue(tree.left);
 
+			//deletes successor.
 			tree.left = remove(tree.left, tree.value);
 		}
 
@@ -90,9 +93,9 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
-	 * @param root
-	 * @return
+	 * Search for the in order successor.
+	 * @param tree The binary Search Tree.
+	 * @return returns the successor.
 	 */
 	private E minValue(Node<E> tree) {
 
@@ -105,16 +108,18 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * The public isEmpty method checks to see if they BST
+	 * is empty.
+	 * @return true if it's empty, false otherwise
 	 */
 	public boolean isEmpty() {
 		return root == null;
 	}
 
 	/**
-	 * 
-	 * @param insertValue
+	 * The public insert method inserts a value to the tree by calling
+	 * a private insert method and passing the root of the tree
+	 * @param insertValue The value to add to the tree.
 	 */
 	public void insert(E insertValue) {
 		if (isEmpty())
@@ -124,14 +129,22 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
-	 * @param root
-	 * @param insertValue
-	 * @return
+	 * This insert method inserts a value to the tree.
+	 * @param tree The root of the binary search tree.
+	 * @param insertValue the value to add.
+	 * @return The root of the resulting binary search tree.
 	 */
 	private Node<E> insert(Node<E> tree, E insertValue) {
 		if (tree == null) {
 			return new Node<E>(insertValue);
+		}
+		//if value is equal to tree.value 
+		//tree.value is replaced
+		if (insertValue == tree.value){
+			tree.value = insertValue;
+		
+		//checks to see if the current value is lower or higher
+		//than the current root.
 		} else if (insertValue.compareTo(tree.value) < 0) {
 			tree.left = insert(tree.left, insertValue);
 		} else if (insertValue.compareTo(tree.value) > 0)
@@ -140,19 +153,20 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
-	 * @param searchValue
-	 * @return
+	 * The contains method checks to see if a value is in the 
+	 * binary search tree.
+	 * @param searchValue The value to search for.
+	 * @return true if searchValue is in the tree, false otherwise.
 	 */
 	public boolean contains(E searchValue) {
 		return contains(root, searchValue);
 	}
 
 	/**
-	 * 
-	 * @param searchValue
-	 * @param tree
-	 * @return
+	 * This method contains checks whether an item is in the BST.
+	 * @param searchValue The item to check for.
+	 * @param tree The binary tree to look for.
+	 * @return true if found, false otherwise.
 	 */
 	private boolean contains(Node<E> tree, E searchValue) {
 		if (tree == null)
@@ -166,113 +180,121 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * The public getPreOrderTraversal method
+	 * returns a Pre-Order traversal of the BST.
+	 * @return ArrayList<E> preOrder
 	 */
 	public ArrayList<E> getPreOrderTraversal() {
+		ArrayList<E> preOrder = new ArrayList<E>(); 
 		preOrder = new ArrayList<E>();
 		if (root == null) {
 			return preOrder;
 		}
-		preOrder(root);
+		preOrder(preOrder, root);
 		return preOrder;
 	}
 
 	/**
-	 * 
-	 * @param preOrder
-	 * @param tree
+	 * This method sorts the Array in preOrder fashion.
+	 * @param tree The Binary Search Tree.
 	 */
-	private void preOrder(Node<E> tree) {
+	private void preOrder(ArrayList<E> preOrder, Node<E> tree) {
 		if (tree != null) {
 			preOrder.add(tree.value);
-			preOrder(tree.left);
-			preOrder(tree.right);
+			preOrder(preOrder, tree.left);
+			preOrder(preOrder, tree.right);
 		}
 	}
 
 	/**
-	 * 
-	 * @return
+	 * The public getInOrderTraversal method
+	 * returns an In order traversal of the BST
+	 * @return ArrayList<E> inOrder
 	 */
 	public ArrayList<E> getInOrderTraversal() {
+		ArrayList<E> inOrder = new ArrayList<E>(); 
 		inOrder = new ArrayList<E>();
 		if (root == null) {
 			return inOrder;
 		}
-		inOrder(root);
+		getInOrderTraversal(inOrder, root);
 		return inOrder;
 	}
 
 	/**
-	 * 
-	 * @param inOrder
-	 * @param tree
+	 * This getInOrderTraversal method sorts the Array
+	 * in in-order fashion.
+	 * @param tree The binary Search Tree.
 	 */
-	private void inOrder(Node<E> tree) {
+	private void getInOrderTraversal(ArrayList<E> inOrder, Node<E> tree) {
 		if (tree != null) {
-			inOrder(tree.left);
+			getInOrderTraversal(inOrder, tree.left);
 			inOrder.add(tree.value);
-			inOrder(tree.right);
+			getInOrderTraversal(inOrder, tree.right);
 		}
 	}
 
 	/**
-	 * 
-	 * @return
+	 * the public getPostOrderTraversal method
+	 * returns the BST in Post-Order fashioned.
+	 * @return ArrayList<E> postOrder
 	 */
 	public ArrayList<E> getPostOrderTraversal() {
+		ArrayList<E> postOrder = new ArrayList<E>();
 		postOrder = new ArrayList<E>();
 		if (root == null) {
 			return postOrder;
 		}
-		postOrder(root);
+		getPostOrderTraversal(postOrder, root);
 		return postOrder;
 	}
 
 	/**
-	 * 
-	 * @param postOrder
-	 * @param tree
+	 * This getPostOrderTraversal method sorts the
+	 * ArrayList in Post-Order fashion.
+	 * @param tree The binary search tree.
 	 */
-	private void postOrder(Node<E> tree) {
+	private void getPostOrderTraversal(ArrayList<E> postOrder, Node<E> tree) {
 		if (tree != null) {
-			postOrder(tree.left);
-			postOrder(tree.right);
+			getPostOrderTraversal(postOrder, tree.left);
+			getPostOrderTraversal(postOrder, tree.right);
 			postOrder.add(tree.value);
 		}
 	}
 
 	/**
-	 * 
-	 * @param value
-	 * @return
+	 * The public getAncestorsOf method 
+	 * @param value The value you are searching for
+	 * @returns ArrayList<E> ancestorsOf.
 	 */
 	public ArrayList<E> getAncestorsOf(E value) {
+		ArrayList<E> ancestorsOf = new ArrayList<E>();
 		ancestorsOf = new ArrayList<E>();
-		getAncestorsOf(root, value);
+		getAncestorsOf(ancestorsOf, root, value);
 		return ancestorsOf;
 	}
 
 	/**
-	 * 
-	 * @param ancestorsOf
-	 * @param root
-	 * @param value
-	 * @return
+	 * This getAncestorsOf method traverses the tree
+	 * to search for the value specified. Adds ancestors if 
+	 * value is found. 
+	 * @param tree the binary search tree.
+	 * @param value The value you are searching for
+	 * @return true if ancestors exist, false otherwise.
 	 */
-	private boolean getAncestorsOf(Node<E> tree, E value) {
+	private boolean getAncestorsOf(ArrayList<E> ancestorsOf, 
+			Node<E> tree, E value) {
 		if (tree == null) {
 			return false;
 		}
 		if (tree.value == value) {
 			return true;
 		}
-		if (getAncestorsOf(tree.left, value)) {
+		if (getAncestorsOf(ancestorsOf, tree.left, value)) {
 			ancestorsOf.add(tree.value);
 			return true;
 		}
-		if (getAncestorsOf(tree.right, value)) {
+		if (getAncestorsOf(ancestorsOf, tree.right, value)) {
 			ancestorsOf.add(tree.value);
 			return true;
 		}
@@ -280,17 +302,17 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * The public size method does the size of the array.
+	 * @return the size of the array.
 	 */
 	public int size() {
 		return (size(root));
 	}
 
 	/**
-	 * 
-	 * @param tree
-	 * @return
+	 * This size method adds the total number of nodes in the array.
+	 * @param tree the binary search tree.
+	 * @return size
 	 */
 	private int size(Node<E> tree) {
 
@@ -301,19 +323,21 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * The public method getTreeHeight gets the level 
+	 * the last leaf in the binary search tree.
+	 * @return the height of the binary seart tree.
 	 */
 	public int getTreeHeight() {
 		return getTreeHeight(root);
 	}
 
 	/**
-	 * 
-	 * @param tree
-	 * @return
+	 * This getTreeHeight method checks to see which
+	 * node has a larger tree height.
+	 * @param tree The binary search tree.
+	 * @return the tree height
 	 */
-	public int getTreeHeight(Node<E> tree) {
+	private int getTreeHeight(Node<E> tree) {
 		if (tree == null)
 			return 0;
 		else {
@@ -329,17 +353,19 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
-	 * @return
+	 * The public method getLeafNodeCount returns the count of all
+	 * the leaves in the BST 
+	 * @return the leaf Count
 	 */
 	public int getLeafNodeCount() {
 		return (getLeafNodeCount(root));
 	}
 
 	/**
-	 * 
-	 * @param tree
-	 * @return
+	 * this getLeafNodeCount method traverses the tree until
+	 * the next node is null. Once it stops it increments the leaf count
+	 * @param tree the binary search tree
+	 * @return returns the count of the leaves
 	 */
 	private int getLeafNodeCount(Node<E> tree) {
 		if (tree == null)
@@ -351,40 +377,46 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
-	 * @param value
+	 * The public method getElementLevel returns the level where the given val
+	 * is located in the BST
+	 * @param val is the given value the user is searching for
 	 * @return
 	 */
 	public int getElementLevel(E val) {
-		return (getElementLevel(root, val, height));
+		int level = 0;
+		
+		return (getElementLevel(root, val, level));
 	}
 
 	/**
-	 * 
-	 * @param value
-	 * @param tree
-	 * @return
+	 * This method getElementLevel traverses the tree looking for
+	 * the given value counting returning a -1 if the given value
+	 * is not located in the BST
+	 * @param tree the binary search tree
+	 * @param val the search value
+	 * @param level the level the traversal is currently on.
+	 * @return results the elements level
 	 */
-	private int getElementLevel(Node<E> root, E val, int level) {
-		if (root == null)
+	private int getElementLevel(Node<E> tree, E val, int level) {
+		if (tree == null)
 			return -1;
-		if (root.value == val)
+		if (tree.value == val)
 			return level + 1;
 
-		int results = getElementLevel(root.left, val, level + 1);
+		int results = getElementLevel(tree.left, val, level + 1);
 		if (results > 0) {
 			return results;
 		}
-		results = getElementLevel(root.right, val, level + 1);
+		results = getElementLevel(tree.right, val, level + 1);
 		return results;
 	}
 
 	/**
-	 * 
-	 * @param results
-	 * @return
+	 * method that returns a formatted version of the array
+	 * @param results the ArrayList<E> tree the BST
+	 * @return returns ArrayList<E> results the ArrayList results
 	 */
-	public String toString(ArrayList<E> tree) {
+	public String combineToString(ArrayList<E> tree) {
 
 		StringBuilder sb = new StringBuilder();
 		String resultsPrint;
@@ -402,21 +434,25 @@ public class BST<E extends Comparable<E>> {
 	}
 
 	/**
-	 * 
+	 * This public toString method is for the TreePrinter class
+	 * this prints out the most current representation of the binary tree
+	 * @return treePrinter results.
 	 */
 	public String toString() {
 		return new TreePrinter().getStringReprOf(this.root);
 
 	}
 
+	/**
+	 * TreePrinter class that prints the BST in its current form.
+	 * @author Sheila Oh
+	 */
 	private class TreePrinter {
 
 		/**
 		 * Generates the string representation of the given tree rooted at the
 		 * node
-		 * 
-		 * @param node
-		 *            tree to represent
+		 * @param node tree to represent
 		 * @return String representation of the given tree rooted at the node
 		 */
 		private String getStringReprOf(Node<E> node) {
@@ -432,6 +468,13 @@ public class BST<E extends Comparable<E>> {
 			return sb.toString();
 		}
 
+		/**
+		 * This private getBlock method gets the block of nodes.
+		 * @param node The binary search tree.
+		 * @return returns the block. 
+		 * 
+		 * 
+		 */
 		private Block getBlock(Node<E> node) {
 			// min spacing between left and right blocks
 			final int SP = 2;
@@ -450,7 +493,8 @@ public class BST<E extends Comparable<E>> {
 			String val = node.value.toString();
 			int len = node.value.toString().length();
 
-			// how much the right block needs to be shifted and the width of all
+			// how much the right block needs to be shifted and
+			//the width of all
 			int rgtShift = hasLft ? (lft.width + SP) : 0;
 			int width = rgtShift + (hasRgt ? rgt.width : 0);
 
@@ -510,16 +554,13 @@ public class BST<E extends Comparable<E>> {
 
 		/**
 		 * Combines the children blocks with the given shift
-		 * 
-		 * @param lft
-		 *            Left Block to combine
-		 * @param rgt
-		 *            Right Block to combine
-		 * @param shift
-		 *            amount to shift the right block
+		 * @param lft Left Block to combine
+		 * @param rgt Right Block to combine
+		 * @param shift amount to shift the right block
 		 * @return combined lines
 		 */
-		private ArrayList<StringBuilder> combinedLines(Block lft, Block rgt, int shift) {
+		private ArrayList<StringBuilder> 
+			combinedLines(Block lft, Block rgt, int shift) {
 			ArrayList<StringBuilder> lines = new ArrayList<StringBuilder>();
 			if (lft == null) {
 				if (rgt != null) {
@@ -539,7 +580,8 @@ public class BST<E extends Comparable<E>> {
 			final Iterator<StringBuilder> rgtIt = rgt.lines.iterator();
 
 			while (lftIt.hasNext() || rgtIt.hasNext()) {
-				StringBuilder sb = lftIt.hasNext() ? lftIt.next() : new StringBuilder();
+				StringBuilder sb = 
+						lftIt.hasNext() ? lftIt.next() : new StringBuilder();
 				padSpUntil(sb, shift);
 				if (rgtIt.hasNext()) {
 					sb.append(rgtIt.next());
@@ -552,12 +594,9 @@ public class BST<E extends Comparable<E>> {
 		/**
 		 * Helper to add multiple characters to the StringBuilder
 		 * 
-		 * @param sb
-		 *            StringBuilder to append to
-		 * @param c
-		 *            character to add
-		 * @param len
-		 *            add until sb is this length
+		 * @param sb StringBuilder to append to
+		 * @param c character to add
+		 * @param len add until sb is this length
 		 */
 		private void padUntil(StringBuilder sb, char c, int len) {
 			while (sb.length() < len) {
@@ -567,11 +606,8 @@ public class BST<E extends Comparable<E>> {
 
 		/**
 		 * Helper to add multiple characters to the StringBuilder
-		 * 
-		 * @param sb
-		 *            StringBuilder to pad
-		 * @param len
-		 *            add until sb is this length
+		 * @param sb StringBuilder to pad
+		 * @param len add until sb is this length
 		 */
 		private void padSpUntil(StringBuilder sb, int len) {
 			while (sb.length() < len) {
