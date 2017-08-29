@@ -56,9 +56,8 @@ public class PatientPriorityQueue {
     		Patient val = patients.get(0);
     		int last = patients.size()-1;
     		patients.set(0, patients.get(last));
-    		
     		patients.remove(patients.size()-1);
-    		siftDown();
+    		siftDown(0);
     		return val;
     	}
     }
@@ -106,63 +105,77 @@ public class PatientPriorityQueue {
 			return patients.get(0);
 	}
     
-    private void siftDown() {
-    	int p = 0;
+    private void siftDown(int index) {
+    	int p = index;
     	int size = patients.size();
-    	int leftChild = 2 * p + 1;
-    	while (leftChild < size) {
+    	while (2 * p + 1 < size) {
+    		int leftChild = 2 * p + 1;
     		int rightChild = leftChild +1;
-    		int min = leftChild;
+    		int min = p;
     		
     		//Is there a right child.
     		if (rightChild < size) {
     			//which child is smaller
     			if(patients.get(rightChild).getPriorityCode()
-    					<= patients.get(leftChild).getPriorityCode() 
-    					&& patients.get(rightChild).getArrivalOrder() 
-    					< patients.get(leftChild).getArrivalOrder()) {
-    				 min = rightChild;
+    					< patients.get(leftChild).getPriorityCode()) {
+    				if(patients.get(rightChild).getArrivalOrder() 
+    						< patients.get(leftChild).getArrivalOrder()) {
+    					min = rightChild;
+    				}
+    				else if (patients.get(rightChild).getArrivalOrder() 
+    						> patients.get(leftChild).getArrivalOrder()){
+    					min = rightChild;
+    					
+    				}
+    				
     			}
-    			else if (patients.get(rightChild).getPriorityCode() 
-    					<= patients.get(leftChild).getPriorityCode() 
-    					&& patients.get(rightChild).getArrivalOrder() 
-    					> patients.get(leftChild).getArrivalOrder())
-    				min = rightChild;
-    			else if (patients.get(rightChild).getPriorityCode() 
-    					> patients.get(leftChild).getPriorityCode() 
-    					&& patients.get(rightChild).getArrivalOrder() 
-    					> patients.get(leftChild).getArrivalOrder())
-    				min = leftChild;
-    			else
-    				min = leftChild;
-    			/*
-    			else if (patients.get(leftChild).getPriorityCode() 
-    					< patients.get(rightChild).getPriorityCode()) {
-    				min = leftChild;
+    			else if(patients.get(rightChild).getPriorityCode() 
+    					> patients.get(leftChild).getPriorityCode()){
+    				if(patients.get(rightChild).getArrivalOrder() 
+    						< patients.get(leftChild).getArrivalOrder()) {
+    					min = leftChild;
+    				}
+    				else if(patients.get(rightChild).getArrivalOrder() 
+    						> patients.get(leftChild).getArrivalOrder()) {
+    					min = leftChild;
+    				}
     			}
-    			else if (patients.get(rightChild).getArrivalOrder() 
-    					< patients.get(leftChild).getArrivalOrder()) {
-    				min = rightChild;
+    			else {
+    				if(patients.get(rightChild).getArrivalOrder() 
+    						< patients.get(leftChild).getArrivalOrder()){
+    					min = rightChild;
+    					
+    				}
+    				else {
+    					min = leftChild;
+    				}
     			}
-    			else 
-    				min = leftChild;
+    			if (patients.get(p).getPriorityCode() 
+    					< patients.get(min).getPriorityCode()) {
+    				min = p;
+    			}
+    			else if(patients.get(p).getPriorityCode() 
+    					== patients.get(min).getPriorityCode()) {
+    				if(patients.get(p).getArrivalOrder() < patients.get(min).getArrivalOrder()) {
+    					min = p;
+    				}
+    				else {
+    					Patient temp = patients.get(p);
+    					patients.set(p, patients.get(min));
+    					patients.set(min, temp);
+    				}
+    				break;
+    			}
+    			else {
+    				Patient temp = patients.get(p);
+    				patients.set(p, patients.get(min));
+    				patients.set(min, temp);
+    			}
     			break;
-    		}
-    		*/
-    		 
     		
-    		if(patients.get(p).getPriorityCode() 
-    				<= patients.get(min).getPriorityCode()) {
-    			break;
-    		}
-    		else{
-    			Patient temp = patients.get(p);
-    			patients.set(p, patients.get(min));
-    			patients.set(min, temp);
-    		}
     		
-    		p = min;
     	}
-    	}
+        	p = min;
+    }
     }
 }
