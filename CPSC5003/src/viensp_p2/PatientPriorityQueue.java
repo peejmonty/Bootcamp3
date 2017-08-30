@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 /**
  * Hospital triage system implemented using a heap.
- * 
  * @author bc3soln
  */
 public class PatientPriorityQueue {
@@ -100,7 +99,8 @@ public class PatientPriorityQueue {
 		int p = patients.size() - 1;
 		while (p != 0) {
 			int parent = (p - 1) / 2;
-			if (patients.get(p).getPriorityCode() >= patients.get(parent).getPriorityCode()) {
+			if (patients.get(p).getPriorityCode() 
+					>= patients.get(parent).getPriorityCode()) {
 				break;
 			} else {
 				Patient temp = patients.get(parent);
@@ -144,6 +144,7 @@ public class PatientPriorityQueue {
 					}
 				}
 			}
+			// is child smaller than parent
 			if (patients.get(p).getPriorityCode() 
 					> patients.get(min).getPriorityCode()) {
 				Patient temp = patients.get(p);

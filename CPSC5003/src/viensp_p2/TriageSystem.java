@@ -1,3 +1,7 @@
+/*
+* CPSC 5003 , Seattle University
+* This is free and unencumbered software released into the public domain.
+*/
 package viensp_p2;
 
 import java.io.File;
@@ -14,11 +18,14 @@ public class TriageSystem {
 			+ "\nFor help type 'help'";
 	private static final String MSG_GOODBYE = "Thanks for visiting!" 
 			+ "Hope we were able to help!";
-	private static final String MSG_HELP = "add <priority-code> <patient-name>\n"
+	private static final String MSG_HELP = "add <priority-code> "
+			+ "<patient-name>\n"
 			+ "            Adds the patient to the triage system.\n"
-			+ "            <priority-code> must be one of the 4 accepted prior" 
+			+ "            <priority-code> must be one of the 4 "
+			+ "accepted prior" 
 			+ "ity codes:\n"
-			+ "                1. immediate 2. emergency 3. urgent 4. minimal" 
+			+ "                1. immediate 2. emergency 3. urgent "
+			+ "4. minimal" 
 			+ "\n"
 			+ "            <patient-name>: patient's full legal name (may " 
 			+ "contain spaces)\n"
@@ -60,7 +67,8 @@ public class TriageSystem {
 	 * @param line String command to execute
 	 * @param priQueue Priority Queue to operate on
 	 */
-	private static void processLine(String line, PatientPriorityQueue priQueue) {
+	private static void processLine(String line, 
+			PatientPriorityQueue priQueue) {
 
 		Scanner lineScanner = new Scanner(line); // Scanner to extract words
 		String cmd = lineScanner.next(); // The first is user's command
@@ -90,7 +98,8 @@ public class TriageSystem {
 	/**
 	 * Reads a text file with each command on a separate line and executes the
 	 * lines as if they were typed into the command prompt.
-	 * @param lineScanner Scanner remaining characters after the command `load`
+	 * @param lineScanner Scanner remaining characters after the command 
+	 * `load`
 	 * @param priQueue priority queue to operate on
 	 */
 	private static void executeCommandsFromFile(Scanner lineScanner, 
@@ -116,7 +125,7 @@ public class TriageSystem {
 	 * @param priQueue priority queue to operate on
 	 */
 	private static void peekNextPatient(PatientPriorityQueue priQueue) {
-		System.out.println("Highest priority patient to be " + "called next: " 
+		System.out.println("Highest priority patient to be " + "called next:" 
 				+ priQueue.peek().getName());
 	}
 
@@ -153,7 +162,7 @@ public class TriageSystem {
 	 * @param priQueue priority queue to operate on
 	 */
 	private static void dequeueNextPatient(PatientPriorityQueue priQueue) {
-		System.out.println("This patient will now be seen: " 
+		System.out.println("This patient will now be seen:" 
 				+ priQueue.peek().getName());
 		priQueue.dequeue();
 	}
@@ -188,6 +197,7 @@ public class TriageSystem {
 		String patientName = lineScanner.nextLine();
 
 		priQueue.addPatient(priorityCode, patientName);
-		System.out.println("Added patient" + patientName + " to the priority system.");
+		System.out.println("Added patient" 
+				+ patientName + " to the priority system.");
 	}
 }

@@ -1,3 +1,7 @@
+/*
+* CPSC 5003 , Seattle University
+* This is free and unencumbered software released into the public domain.
+*/
 package viensp_p2;
 
 /**
@@ -12,9 +16,9 @@ public class Patient {
     /**
      * Creates a patient object.
      * @param priorityCode the priority code of the patient, lower will be
-     *                     seen first
+     * seen first
      * @param arrivalOrder number representing the order the patient
-     *                     arrived in the waiting room.
+     * arrived in the waiting room.
      * @param name the name of the patient
      */
     public Patient(int priorityCode, int arrivalOrder, String name) {
